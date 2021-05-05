@@ -4,12 +4,18 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 
+// Connects a module to work with .env
+require('dotenv').config();
+
 // Connects routers
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 
 // Creates an instance of app
 const app = express();
+
+// Adds a secret word for work with cookies
+app.use(cookieParser(process.env.SECRET_KEY));
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -45,3 +51,9 @@ app.use(function (err, req, res, next) {
 });
 
 module.exports = app;
+
+/**
+ * Доступ к переменным из .env:
+ * process.env.SECRET_KEY
+ * process.env.NODE_ENV
+ */
