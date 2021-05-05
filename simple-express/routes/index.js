@@ -2,9 +2,15 @@ var express = require('express');
 var router = express.Router();
 
 /* GET home page.
-The template is rendered here */
-router.get('/', function (req, res, next) {
-  res.render('index', { title: 'Express' });
+The template is rendered here
+Use: session */
+router.get('/', (req, res, next) => {
+  req.session.views = req.session.views === void 0 ? 0 : ++req.session.views;
+  res.render('index', {
+    title: 'Express App',
+    views: req.session.views,
+  });
+  console.log('req.session.views:', req.session.views);
 });
 
 // Принимает две переменные и передаем их для рендера response.ejs
@@ -34,3 +40,10 @@ router.get('/clearcookie', (req, res, next) => {
 });
 
 module.exports = router;
+
+/**
+ * Eession destroy:
+ * req.session.destroy(function (err) {
+  // cannot access session here
+})
+ */

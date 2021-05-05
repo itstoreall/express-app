@@ -17,6 +17,15 @@ const app = express();
 // Adds a secret word for work with cookies
 app.use(cookieParser(process.env.SECRET_KEY));
 
+// Adds a session
+app.use(
+  require('express-session')({
+    resave: false,
+    saveUninitialized: false,
+    secret: process.env.SECRET_KEY,
+  })
+);
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
